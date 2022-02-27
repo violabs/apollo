@@ -10,4 +10,6 @@ class ApolloApplication
 
 fun main(args: Array<String>) {
   runApplication<ApolloApplication>(*args)
+    .beanDefinitionNames
+    .forEach(::println)
 }

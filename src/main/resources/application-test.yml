@@ -1,0 +1,8 @@
+
+spring:
+  data.neo4j.database: theabyss
+  neo4j:
+    uri: bolt://localhost:7687
+    authentication:
+      username: neo4j
+      password: qwe123$!

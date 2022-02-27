@@ -10,7 +10,9 @@ import org.springframework.transaction.ReactiveTransactionManager
 
 @Configuration
 class Neo4jConfig {
-
+  /**
+   * Intellij red error - not sure how to fix but this works
+   */
   @Bean(ReactiveNeo4jRepositoryConfigurationExtension.DEFAULT_TRANSACTION_MANAGER_BEAN_NAME)
   fun reactiveTransactionManager(
     driver: Driver,

@@ -10,6 +10,7 @@ interface DefaultService<T> {
   fun <S : T> save(node: S?): Mono<S>
   fun <S : T> saveAll(nodes: Set<S>): Flux<S>
   fun existsById(id: Long): Mono<Boolean>
+  fun deleteAll()
   fun deleteById(id: Long): Mono<Boolean>
 }
 
@@ -36,6 +37,10 @@ abstract class MainDefaultService<T>(protected val repo: ReactiveNeo4jRepository
 
   fun existsById(id: Long): Mono<Boolean> {
     return repo.existsById(id)
+  }
+
+  fun deleteAll() {
+    repo.deleteAll().subscribe()
   }
 
   fun deleteById(id: Long): Mono<Boolean> {
