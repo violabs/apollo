@@ -1,6 +1,6 @@
 package com.violabs.apollo.service
 
-import com.violabs.apollo.domain.Person
+import com.violabs.apollo.domain.nodes.Person
 import org.springframework.data.neo4j.repository.ReactiveNeo4jRepository
 import org.springframework.stereotype.Service
 

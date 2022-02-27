@@ -1,6 +1,6 @@
 package com.violabs.apollo.service
 
-import com.violabs.apollo.domain.GovernmentRole
+import com.violabs.apollo.domain.nodes.GovernmentRole
 import org.springframework.data.neo4j.repository.ReactiveNeo4jRepository
 import org.springframework.stereotype.Service
 
