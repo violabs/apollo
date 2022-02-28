@@ -4,6 +4,18 @@
 
 This is a public application for connection to Neo4J. Also comes with some publicly available seed data.
 
+# Requirements
+
+In order to run this application you need to install Neo4j (Neo4j Desktop recommended) and either
+setup the password the same as the `application-local.yml` & `application-test.yml` or change the property files for
+each to match your password. Same with the database names - current are:
+
+* LOCAL: `thewell`
+* TEST: `theabyss`
+
+Nonprod and Prod is not included as a `yml` for security reasons - if you see either profiles know that you will
+have to provide your own to access the code.
+
 ### Reference Documentation
 
 For further reference, please consider the following sections:
