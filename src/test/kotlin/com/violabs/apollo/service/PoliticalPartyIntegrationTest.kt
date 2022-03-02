@@ -26,8 +26,8 @@ class PoliticalPartyIntegrationTest : StandardServiceIntegrationTest<PoliticalPa
   fun setup() {
     super.initializeTest(
       this.politicalPartyService,
-      animaniacsParty,
-      parties
+      this.animaniacsParty,
+      this.parties
     )
   }
 }
