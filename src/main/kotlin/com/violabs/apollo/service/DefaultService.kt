@@ -14,46 +14,43 @@ interface DefaultService<T> {
   fun deleteById(id: Long): Mono<Boolean>
 }
 
-abstract class MainDefaultService<T>(protected val repo: ReactiveNeo4jRepository<T, Long>) {
-  fun findById(id: Long): Mono<T> {
-    return repo.findById(id)
-  }
+abstract class MainDefaultService<T>(protected val baseRepo: ReactiveNeo4jRepository<T, Long>) {
+  fun findById(id: Long): Mono<T> = baseRepo.findById(id)
+  fun findAll(): Flux<T> = baseRepo.findAll()
 
-  fun findAll(): Flux<T> {
-    return repo.findAll()
-  }
-
-  fun <S : T> save(node: S?): Mono<S> {
-    return node
-      ?.let(repo::save)
+  fun <S : T> save(node: S?): Mono<S> =
+    node
+      ?.let(baseRepo::save)
       ?: Mono.empty()
-  }
 
-  fun <S : T> saveAll(nodes: Set<S>): Flux<S> {
-    return Flux
+  fun <S : T> saveAll(nodes: Set<S>): Flux<S> =
+    Flux
       .fromIterable(nodes)
-      .flatMap(this::save)
-  }
+      .let(baseRepo::saveAll)
 
-  fun existsById(id: Long): Mono<Boolean> {
-    return repo.existsById(id)
-  }
+  fun existsById(id: Long): Mono<Boolean> = baseRepo.existsById(id)
 
   fun deleteAll() {
-    repo.deleteAll().subscribe()
+    baseRepo
+      .deleteAll()
+      .block()
   }
 
-  fun deleteById(id: Long): Mono<Boolean> {
-    return repo
+  fun deleteById(id: Long): Mono<Boolean> =
+    baseRepo
       .existsById(id)
       .flatMap { this.deleteAndCheck(id, it) }
-  }
 
   private fun deleteAndCheck(id: Long, check: Boolean): Mono<Boolean> {
     if (!check) return Mono.just(false)
 
-    return repo
+    return baseRepo
       .deleteById(id)
-      .then(repo.existsById(id).map { !it })
+      .then(checkEntityDoesNotExistById(id))
   }
+
+  private fun checkEntityDoesNotExistById(id: Long): Mono<Boolean> =
+    baseRepo
+      .existsById(id)
+      .map(Boolean::not)
 }
